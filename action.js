@@ -1,7 +1,7 @@
 //for implementation details visit marinsborg.com
 var apiUrl = "https://pokeapi.co/api/v2/pokemon/?"; //API base URL
 var offset = 0;
-var limit = 10; //limiting Pokemons - sprites are not numbered properly after 665
+var limit = 151; //limiting Pokemons - sprites are not numbered properly after 665
 var pokemonUrl = apiUrl + "limit=" + limit + "&offset=" + offset; //complete URL with limit
 var spriteUrl =
   "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/"; //base URL from which sprites are fetched
@@ -20,12 +20,19 @@ guess.addEventListener("keypress", function (e) {
   }
 });
 
+const button = document.querySelector("button");
+button.addEventListener("click", checkGuess);
+
+
+
 // Execute this function to play the audio
 function playPokemonMp3() {
   var audio = new Audio("whos-that-pokemon_.mp3");
 
   audio.play();
 }
+
+guess.addEventListener("focus", playPokemonMp3);
 
 //function that fetched Pokemon data from the API
 const fetchPokemonData = async function (url) {
@@ -40,8 +47,15 @@ var main = async function () {
 
 //function that compares player's guess with Pokemon name and based on that either increases or resets streak
 function checkGuess() {
-  if (pokemonName.toLowerCase() === guess.value) {
+
+console.log("fuera: ", pokemonName)
+
+  if (pokemonName.toLowerCase() === guess.value.toLowerCase()) {
     streak++; //correct guess - increase streak by one
+    
+    console.log("dentro: ", pokemonName)
+    //console.log("dentro: " checkGuess.value)
+
   } else {
     streak = 0; //wrong guess - reset streak
   }
